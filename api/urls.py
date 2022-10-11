@@ -9,6 +9,7 @@ urlpatterns = [
     path('token/obtain/', jwt_views.TokenObtainPairView.as_view(), name='token_create'),  # override sjwt stock token
     path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
     path('user/create/', UserRegistrationView.as_view(), name="create_user"),
+    path('user/get-data/', GetUserData.as_view(), name="get_user_data"),
     path('cto-hunt/registration/', CTOHuntRegistrationView.as_view(), name="cto_hunt_registration")
 ]
 

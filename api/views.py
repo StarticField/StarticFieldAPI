@@ -64,8 +64,19 @@ class CTOHuntRegistrationView(APIView):
         registration_mail(email, data)
         return Response({"Message": "Done !"}, status=status.HTTP_200_OK)
 
-        
-
-
+class GetUserData(APIView):
+    lookup_url_kwarg = "username"
+    def post(self, request, format=None):
+        username = request.data.get(self.lookup_url_kwarg)
+        user = User.objects.filter(username=username).first()  
+        profile = Profile.objects.get(user=user) 
+        payload = {
+            "emailid": user.email,
+            "contact": profile.mobile,
+            "linkedin": profile.linkedin,
+            "instagram": profile.instagram,
+            "enrolled": CTOHuntProgress.objects.filter(user=user).exists()
+        }
+        return Response(payload, status=status.HTTP_200_OK)
         
         

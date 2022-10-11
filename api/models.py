@@ -32,9 +32,9 @@ class Profile(models.Model):
     skills = models.CharField(null=True, blank=True, max_length=50)#
     pursuing = models.CharField(null=True, default="None", max_length=50, choices=degree_choices)#
     field = models.CharField(null=True, blank=True, max_length=50)#
-    #country = models.CharField(max_length=200, null=True, blank=True)
-    linkedin = models.URLField(max_length=200, null=True, blank=True)# links
-    github = models.URLField(max_length=200, null=True, blank=True)# links
+    linkedin = models.URLField(max_length=200, null=True, blank=True, default="https://www.linkedin.com/")# links
+    github = models.URLField(max_length=200, null=True, blank=True, default="https://www.github.com/")# links
+    instagram = models.URLField(max_length=200, null=True, blank=True, default="https://www.instagram.com/")# links
     points = models.IntegerField(default=0)
     mobile = models.CharField(null=False, blank=True, max_length=50)
 
