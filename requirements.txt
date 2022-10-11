@@ -15,7 +15,7 @@ requests
 sqlparse
 uritemplate
 urllib3
-
+django-cors-headers
 django-email-verification
 oauthlib
 Pillow
