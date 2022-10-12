@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-4h4r7tmd1=)n&c&zpnj!7g57il_x&g2_4qr))uzy9lhymj=*2t'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'starticfieldapi.herokuapp.com']
 
