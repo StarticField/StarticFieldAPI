@@ -15,4 +15,13 @@ requests
 sqlparse
 uritemplate
 urllib3
-
+django-cors-headers
+django-email-verification
+oauthlib
+Pillow
+pandas
+dj_database_url
+django_heroku
+gunicorn
+psycopg2
+whitenoise
