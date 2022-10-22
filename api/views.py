@@ -36,7 +36,7 @@ class CompleteProfileView(APIView):
     def post(self, request, format=None):
         username = request.data.get('username')
         fullname = request.data.get('fullname')
-        college = request.data.get('college')
+        college = request.data.get('collegename')
         skills = request.data.get('skills')
         field = request.data.get('field')
         linkedin = request.data.get('linkedin')
