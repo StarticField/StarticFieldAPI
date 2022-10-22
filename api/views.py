@@ -32,36 +32,31 @@ class UserRegistrationView(APIView):
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class CTOHuntRegistrationView(APIView):
+class CompleteProfileView(APIView):
     def post(self, request, format=None):
-        data = request.POST
-        username = data['username']
-        email = data['email']
-        college = data['college']
-        skills = data['skills']
-        pursuing = data['pursuing']
-        field = data['field']
-        linkedin = ""
-        github = ""
-        if 'linkedin' in data:
-            linkedin = data['linkedin']
-        if 'github' in data:
-            github = data['github']
+        username = request.data.get('username')
+        fullname = request.data.get('fullname')
+        college = request.data.get('college')
+        skills = request.data.get('skills')
+        field = request.data.get('field')
+        linkedin = request.data.get('linkedin')
+        github = request.data.get('github')
+        instagram = request.data.get('instagram')
+
         # Creating new user
-        random_psswd = generate_code()
-        user = User.objects.create(username=username, email=email)
-        user.set_password(random_psswd)
+        user = User.objects.filter(username=username).first()
+        profile = Profile.objects.get(user=user)
         # Creating profile page
-        profile = Profile.objects.create(
-            user=user,
-            college=college,
-            skills=skills,
-            pursuing=pursuing,
-            field=field,
-            linkedin=linkedin,
-            github=github,
-        )
-        registration_mail(email, data)
+        profile.full_name = fullname
+        profile.college = college
+        profile.field = field
+        profile.skills = skills
+        profile.linkedin = linkedin
+        profile.instagram = instagram
+        profile.github = github
+        profile.save(update_fields=["college", "field", "skills", "linkedin", "instagram", "github", "full_name"])
+
+        #registration_mail(email, data)
         return Response({"Message": "Done !"}, status=status.HTTP_200_OK)
 
 class GetUserData(APIView):
@@ -70,12 +65,15 @@ class GetUserData(APIView):
         username = request.data.get(self.lookup_url_kwarg)
         user = User.objects.filter(username=username).first()  
         profile = Profile.objects.get(user=user) 
+        completed = len(profile.full_name)>0
         payload = {
             "emailid": user.email,
             "contact": profile.mobile,
             "linkedin": profile.linkedin,
             "instagram": profile.instagram,
-            "enrolled": CTOHuntProgress.objects.filter(user=user).exists()
+            "github": profile.github,
+            "enrolled": CTOHuntProgress.objects.filter(user=user).exists(),
+            "completed": completed
         }
         return Response(payload, status=status.HTTP_200_OK)
         

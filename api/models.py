@@ -27,6 +27,7 @@ def generate_code():
 
 class Profile(models.Model):
     slug = models.CharField(editable=False, default=generate_code, max_length=50)
+    full_name = models.CharField(null=True, blank=True, max_length=50)
     user = models.OneToOneField(User, related_name="user", on_delete=models.CASCADE)#
     college = models.CharField(null=True, blank=True, max_length=100)#
     skills = models.CharField(null=True, blank=True, max_length=50)#
