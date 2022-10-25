@@ -67,6 +67,7 @@ class GetUserData(APIView):
         profile = Profile.objects.get(user=user) 
         completed = len(profile.full_name)>0
         payload = {
+            "fullname": profile.full_name,
             "emailid": user.email,
             "contact": profile.mobile,
             "linkedin": profile.linkedin,
