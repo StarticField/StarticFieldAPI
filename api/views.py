@@ -42,7 +42,7 @@ class CompleteProfileView(APIView):
         linkedin = request.data.get('linkedin')
         github = request.data.get('github')
         instagram = request.data.get('instagram')
-
+        print("username ::::: ", username)
         # Creating new user
         user = User.objects.filter(username=username).first()
         profile = Profile.objects.get(user=user)
@@ -63,6 +63,7 @@ class GetUserData(APIView):
     lookup_url_kwarg = "username"
     def post(self, request, format=None):
         username = request.data.get(self.lookup_url_kwarg)
+        print("username >>>> ", username)
         user = User.objects.filter(username=username).first()  
         profile = Profile.objects.get(user=user) 
         completed = len(profile.full_name)>0
