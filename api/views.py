@@ -66,7 +66,7 @@ class GetUserData(APIView):
         print("username >>>> ", username)
         user = User.objects.filter(username=username).first()  
         profile = Profile.objects.get(user=user) 
-        completed = len(profile.full_name)>0
+        completed = len(profile.full_name)>0 if profile.full_name else False
         payload = {
             "fullname": profile.full_name,
             "emailid": user.email,
