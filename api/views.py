@@ -61,12 +61,11 @@ class CompleteProfileView(APIView):
 
 class GetUserData(APIView):
     lookup_url_kwarg = "username"
-    def post(self, request, format=None):
-        username = request.data.get(self.lookup_url_kwarg)
+    def get(self, request, format=None):
+        username = request.GET.get("username")
         print("username >>>> ", username)
         user = User.objects.filter(username=username).first()  
         profile = Profile.objects.get(user=user) 
-        completed = len(profile.full_name)>0 if profile.full_name else False
         payload = {
             "fullname": profile.full_name,
             "emailid": user.email,
@@ -75,8 +74,59 @@ class GetUserData(APIView):
             "instagram": profile.instagram,
             "github": profile.github,
             "enrolled": CTOHuntProgress.objects.filter(user=user).exists(),
-            "completed": completed
+            "completed": profile.completed
         }
         return Response(payload, status=status.HTTP_200_OK)
         
-        
+class GetEnrolledStatus(APIView):
+    def get(self, request, format=None):
+        username = request.GET.get("username")
+        user = User.objects.filter(username=username).first()  
+        profile = Profile.objects.get(user=user) 
+        if CTOHuntProgress.objects.filter(user=user).exists():
+            cto_status = "enrolled"
+        else :
+            if profile.completed:
+                cto_status = "available"
+            else :
+                cto_status = "unavailable"
+        if MockPitchProgress.objects.filter().exists():
+            mock_status = "enrolled"
+        else :
+            mock_status = "available"
+        payload = {
+            "ctohunt": cto_status,
+            "mockpitch": mock_status,
+        }
+        return Response(payload, status=status.HTTP_200_OK)
+
+class GetFormAvailableView(APIView):
+    def get(self, request, name):
+        username = request.GET.get("username")
+        user = User.objects.filter(username=username).first()
+        available = False
+        if name=="mockpitch":
+            query = MockPitchProgress.objects.filter(user=user)
+            if query.exists():
+                available = True
+            return Response({"available": available}, status=status.HTTP_200_OK)
+        """elif name=="ctohunt":
+            query = CTOHuntProgress.objects.filter(user=user)
+            if query.exists():
+                available = False
+            return Response({"available": available}, status=status.HTTP_200_OK)"""
+        return Response({"error": "Some error"}, status=status.HTTP_204_NO_CONTENT)
+
+class EnrollInEvent(APIView):
+    def post(self, request, format=None):
+        username = request.data.get("username")
+        name = request.data.get("event")
+        user = User.objects.filter(username=username).first()
+        if name=="mockpitch":
+            MockPitchProgress.objects.create(user=user)
+            return Response({"enrolled": "available"}, status=status.HTTP_200_OK)
+        elif name=="ctohunt":
+            CTOHuntProgress.objects.create(user=user)
+            return Response({"enrolled": "available"}, status=status.HTTP_200_OK)
+        return Response({"error": "Some error"}, status=status.HTTP_204_NO_CONTENT)
+            
