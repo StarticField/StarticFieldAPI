@@ -38,6 +38,7 @@ class Profile(models.Model):
     instagram = models.URLField(max_length=200, null=True, blank=True, default="https://www.instagram.com/")# links
     points = models.IntegerField(default=0)
     mobile = models.CharField(null=False, blank=True, max_length=50)
+    completed = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username
@@ -57,6 +58,22 @@ class CTOHuntProgress(models.Model):
     result = models.CharField(default="Rejected", max_length=200)
 
     def __str__(self):
-        max_cleared = ["None", "Round 1", "Round 2", "Round 3"][self.round_cleared]
-        return f"{user.username} cleared {max_cleared}"
+        max_cleared = ["None", "Round 1", "Round 2", "Round 3"][self.max_round_cleared]
+        return f"{self.user.username} cleared {max_cleared}"
 
+class MockPitchProgress(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    round1Status = models.CharField(default="Not Started", max_length=50, choices=status_choices)
+    round2Status = models.CharField(default="Not Started", max_length=50, choices=status_choices)
+    round3Status = models.CharField(default="Not Started", max_length=50, choices=status_choices)
+    round4Status = models.CharField(default="Not Started", max_length=50, choices=status_choices)
+    result = models.CharField(default="Rejected", max_length=200)
+
+    def __str__(self):
+        # max_cleared = ["None", "Round 1", "Round 2", "Round 3"][self.round_cleared]
+        return self.user.username+" "+("selected" if self.result=="Selected" else "rejected")
+
+class PasswordResetRequest(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    key = models.CharField(max_length=50, null=False, default="default_key")
+    expire_in = models.DateTimeField(auto_now_add=False)

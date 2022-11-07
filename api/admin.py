@@ -5,3 +5,4 @@ from .models import *
 
 admin.site.register(CTOHuntProgress)
 admin.site.register(Profile)
+admin.site.register(MockPitchProgress)
