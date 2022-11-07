@@ -71,4 +71,9 @@ class MockPitchProgress(models.Model):
 
     def __str__(self):
         # max_cleared = ["None", "Round 1", "Round 2", "Round 3"][self.round_cleared]
-        return self.user.username+" "+("selected" if self.selection_status else "rejected")
+        return self.user.username+" "+("selected" if self.result=="Selected" else "rejected")
+
+class PasswordResetRequest(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    key = models.CharField(max_length=50, null=False, default="default_key")
+    expire_in = models.DateTimeField(auto_now_add=False)

@@ -7,13 +7,13 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <!--[if mso]><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch><o:AllowPNG/></o:OfficeDocumentSettings></xml><![endif]-->
     <!--[if !mso]><!-->
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <!--<![endif]-->
     
 </head>
 <style>
     .main {
         width: 100vw;
+        background-color: black;
     }
     .img {
         max-width: 80vw;
@@ -23,7 +23,7 @@
         color: rgb(209, 207, 207);
     }
     .blue {
-        background-color: rgb(1, 105, 242);
+        background-color: rgb(150, 1, 242);
     }
     .opt {
         margin: 10px;
@@ -46,54 +46,55 @@
 </style>
 <body style="background-color: rgb(245, 244, 244); margin: 0; padding: 0; -webkit-text-size-adjust: none; text-size-adjust: none;">
 <div class="">
-<div class="main w3-black">
+<div class="main">
     <div class="w3-row w3-header">
-        <div class="w3-medium w3-margin">
+        <div style="margin: 12px; font-size: medium; color: white;" class="w3-medium w3-margin">
             <img src="images/favicon.ico" /> StarticField
         </div>
-        <div align="center" class="w3-row" style="background-color: #0452ee; background-image: url('images/heasder-bg.png'); background-repeat: no-repeat; background-size: cover; color: #000000;">
-            <h1 class="w3-text-white">Hey, @ashsenior</h1>
+        <div align="center" class="w3-row" style="background-color: rgb(150, 1, 242); background-image: url('{% static "templates/images/heasder-bg.png"%}'); background-repeat: no-repeat; background-size: cover; color: #000000;">
+            <h2 class="w3-cursive w3-text-white">All India student CTO Hunt</h2>
         </div>
-        <div class="w3-row w3-text-white w3-padding w3-margin" >
-            <h2>You've now joined over 20 million worldwide collaborators.</h2>
-            <p class="text">People like you have done amazing things on our whiteboard for work and play. With an infinite whiteboard, the possibilities are literally limitless. So the question is: What will you create today?</p>
-            <button class="w3-button blue w3-round-xxlarge w3-large w3-padding" >Join the Discord Community</button>
+        <div class="w3-row w3-text-white w3-padding" >
+            <h3>You are invited to become the <e style="color: rgb(150, 1, 242);">Technical Backbone</e> of the next big thing.</h3>
+            <p class="text">Startic Field loves to invite you to India's first ever one of its kind hackathon The ‘CTO hunt’ with a prize pool of <e class="w3-text-yellow">₹ 22,000</e>.            
+                Do you have the technical skills to thrive in a startup environment? Are you looking to build the next big success?
+                
+                If you answered yes to any of these questions, then the CTO hunt is for you.
+            </p>
+            <a href="https://www.starticfield.com/cto-hunt" class="w3-button blue w3-round-xxlarge w3-large" >Register today</a>
         </div>
         <div style="width: 100%;" class="w3-row w3-padding" >
-            <img class="w3-img img" style="width: 100%;" src="images/footer.webp" />
+            <img class="w3-img img" style="width: 100%;" src="{% static "templates/images/allIndiaHunt.webp"%}" />
         </div>
     </div>
     <div class="w3-row w3-padding" >
-        <div class="opt w3-row w3-padding" >
-            <h4 class="">Are you a student looking for experience ?</h4>
-            <p class="w3-small">
-                We at StarticField will help you get real world experience and will provide you the list of best early stage startups around the world to work on.
-                <a href="#" class="w3-small w3-text-blue" >more</a>
+        <div>
+            <p>Get certified as a CTO material by StarticField and win a chance to work with multiple early stage startups.</p>
+        </div>
+        <div class="w3-row w3-center" >
+            <h3 class="">Win amazing<e style="color: rgb(2, 191, 6);">💲Cash Prizes</e></h3>
+            <p class="w3-medium">
+                1st Prize <e class="w3-padding w3-green w3-round-xxlarge">₹ 10,000</e>
+            </p>
+            <p class="w3-medium">
+                2nd Prize <e class="w3-padding w3-green w3-round-xxlarge">₹ 7,000</e>
+            </p>
+            <p class="w3-medium">
+                3rd Prize <e class="w3-padding w3-green w3-round-xxlarge">₹ 5,000</e>
             </p>
         </div>
-        <div class="opt w3-padding" >
-            <h4 class="">Do you have an idea and want to convert it into a startup ?</h4>
-            <p class="w3-small">We could send you an email with at least a thousand things people love about Miro. We'll start with just three. (If you want to see that email, let us know, and we'll get our writer on it.) 
-                <a href="#" class="w3-small w3-text-blue" >more</a>
-            </p>
-        </div>
-        <div class="opt w3-padding" >
-            <h4 class="">Are you a student looking for experience ?</h4>
-            <p class="w3-small">We could send you an email with at least a thousand things people love about Miro. We'll start with just three. (If you want to see that email, let us know, and we'll get our writer on it.) 
-                <a href="#" class="w3-small w3-text-blue" >more</a>
-            </p>
-        </div>
-        <a href="#" class="w3-button w3-medium blue w3-round-xxlarge w3-margin" >Get Started</a>
+        <p class="w3-medium" >We can't wait to see what you can do !</p>
+        <p class="w3-medium" >Team StarticField</p>
     </div>
     <div class="w3-footer footer" >
         <div class="hb-footer__social" style="text-align:center; font-size:0">
             <a href="#" target="_blank" class="hb-footer__social-link" style="-webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; display:inline-block; vertical-align:top; width:49px; height:47px; margin:0 6px; color:#444444" data-hs-link-id="0">
             <img src="https://rtb-production-eu-mail.s3.eu-west-1.amazonaws.com/miro/images/icons/mvp-twitter.png" style="vertical-align:bottom; -ms-interpolation-mode:bicubic; max-width:100%; height:auto; display:block" height="auto"/>
             </a>
-            <a href="#" target="_blank" class="hb-footer__social-link" style="-webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; display:inline-block; vertical-align:top; width:49px; height:47px; margin:0 6px; color:#444444" data-hs-link-id="0">
+            <a href="https://www.linkedin.com/company/starticfield/" class="hb-footer__social-link" style="-webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; display:inline-block; vertical-align:top; width:49px; height:47px; margin:0 6px; color:#444444" data-hs-link-id="0">
             <img src="https://rtb-production-eu-mail.s3.eu-west-1.amazonaws.com/miro/images/icons/mvp-in.png" style="vertical-align:bottom; -ms-interpolation-mode:bicubic; max-width:100%; height:auto; display:block" height="auto"/>
             </a>
-            <a href="#" target="_blank" class="hb-footer__social-link" style="-webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; display:inline-block; vertical-align:top; width:49px; height:47px; margin:0 6px; color:#444444" data-hs-link-id="0">
+            <a href="https://www.youtube.com/channel/UC3V_g2rgU_G9newiszP5wnw/about" class="hb-footer__social-link" style="-webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; display:inline-block; vertical-align:top; width:49px; height:47px; margin:0 6px; color:#444444" data-hs-link-id="0">
             <img src="https://rtb-production-eu-mail.s3.eu-west-1.amazonaws.com/miro/images/icons/mvp-youtube.png" style="vertical-align:bottom; -ms-interpolation-mode:bicubic; max-width:100%; height:auto; display:block" height="auto"/>
             </a>
         </div>

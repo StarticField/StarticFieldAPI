@@ -11,6 +11,8 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
 import json
+import datetime
+from .mails import *
 # Create your views here.
 
 class UserRegistrationView(APIView):
@@ -30,7 +32,7 @@ class UserRegistrationView(APIView):
                 )
                 #registration_mail(email, data)
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_200_OK)
 
 class CompleteProfileView(APIView):
     def post(self, request, format=None):
@@ -54,7 +56,8 @@ class CompleteProfileView(APIView):
         profile.linkedin = linkedin
         profile.instagram = instagram
         profile.github = github
-        profile.save(update_fields=["college", "field", "skills", "linkedin", "instagram", "github", "full_name"])
+        profile.completed = True
+        profile.save(update_fields=["college", "field", "skills", "linkedin", "instagram", "github", "full_name", "completed"])
 
         #registration_mail(email, data)
         return Response({"Message": "Done !"}, status=status.HTTP_200_OK)
@@ -90,7 +93,7 @@ class GetEnrolledStatus(APIView):
                 cto_status = "available"
             else :
                 cto_status = "unavailable"
-        if MockPitchProgress.objects.filter().exists():
+        if MockPitchProgress.objects.filter(user=user).exists():
             mock_status = "enrolled"
         else :
             mock_status = "available"
@@ -129,4 +132,38 @@ class EnrollInEvent(APIView):
             CTOHuntProgress.objects.create(user=user)
             return Response({"enrolled": "available"}, status=status.HTTP_200_OK)
         return Response({"error": "Some error"}, status=status.HTTP_204_NO_CONTENT)
-            
+
+class ResetKeyVerifyView(APIView):
+    def get(self, request, format=None):
+        email = request.GET.get("email")
+        user = User.objects.filter(email=email)
+        if user.exists():
+            user = user.first()
+            send_reset_mail(email, user.username)
+            return Response({"message": "sent"}, status=status.HTTP_200_OK)
+        return Response({"message": "error"}, status=status.HTTP_204_NO_CONTENT)
+
+    def post(self, request, format=None):
+        username = request.data.get("username")
+        password = request.data.get("password")
+        key = request.data.get("key")
+        # password reset
+        user = User.objects.get(username=username)
+        user.set_psswd(password)
+        user.save(update_fields=["password"])
+        # delete instance
+        inst = PasswordResetRequest.objects.filter(username=username, key=key)
+        inst.delete()
+        return Response({"message": "Done"}, status=status.HTTP_200_OK) 
+
+class ResetKeyVerifyView(APIView):
+    def post(self, request, format=None):
+        username = request.data.get("username")
+        key = request.data.get("key")
+        inst = PasswordResetRequest.objects.filter(username=username, key=key)
+        if inst.exists():
+            inst = inst.first()
+            if inst.expire_in>datetime.datetime.now():
+                return Response({"valid": True}, status=status.HTTP_200_OK)
+            return Response({"valid": False}, status=status.HTTP_200_OK)
+        return Response({"valid": False}, status=status.HTTP_200_OK)
